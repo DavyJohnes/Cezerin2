@@ -148,3 +148,6 @@ theme/assets/*.map
 # Logs and store build directories
 dist/*
 logs/*
+
+# IntelliJ IDEA
+.idea
