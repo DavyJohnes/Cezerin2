@@ -3,12 +3,16 @@ import url from "url"
 import winston from "winston"
 import "./lib/logger"
 import settings from "./lib/settings"
+import { CA } from '../../../config/yandex-ca';
 
 const mongodbConnection = settings.mongodbServerUrl
 const mongoPathName = url.parse(mongodbConnection).pathname
 const dbName = mongoPathName.substring(mongoPathName.lastIndexOf("/") + 1)
 
 const CONNECT_OPTIONS = {
+  replSet: {
+    sslCA: CA,
+  },
   useNewUrlParser: true,
 }
 

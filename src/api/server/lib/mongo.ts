@@ -2,6 +2,7 @@ import { MongoClient } from "mongodb"
 import url from "url"
 import winston from "winston"
 import settings from "./settings"
+import { CA } from '../../../../config/yandex-ca';
 
 const mongodbConnection = settings.mongodbServerUrl
 const mongoPathName = url.parse(mongodbConnection).pathname
@@ -9,6 +10,9 @@ const dbName = mongoPathName.substring(mongoPathName.lastIndexOf("/") + 1)
 
 const reconnectInterval = 1000
 const connectOptions = {
+  replSet: {
+    sslCA: CA,
+  },
   reconnectTries: 3600,
   reconnectInterval,
   useNewUrlParser: true,
