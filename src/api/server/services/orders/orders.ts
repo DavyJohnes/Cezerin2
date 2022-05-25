@@ -1,4 +1,4 @@
-import { hashSync } from "bcrypt"
+import { hashSync } from "bcryptjs"
 import handlebars from "handlebars"
 import { escapeRegExp } from "lodash"
 import { ObjectID } from "mongodb"

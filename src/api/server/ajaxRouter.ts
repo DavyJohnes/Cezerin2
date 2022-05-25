@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import CezerinClient from "cezerin2-client"
 import express from "express"
 import handlebars from "handlebars"
