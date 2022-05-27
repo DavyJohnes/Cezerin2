@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { connectToWebSocket } from "lib/apiWebSocket"
+// import { connectToWebSocket } from "lib/apiWebSocket"
 import * as auth from "lib/auth"
 import settings from "lib/settings"
 import { fetchSettings } from "modules/settings/actions"
@@ -16,8 +16,8 @@ if (!settings.developerMode) auth.validateCurrentToken()
 const store = configureStore({ reducer })
 store.dispatch(fetchSettings())
 
-if (window.WebSocket) connectToWebSocket(store)
-else console.log("WebSocket is not supported by your browser.")
+/* if (window.WebSocket) connectToWebSocket(store)
+else console.log("WebSocket is not supported by your browser.") */
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(

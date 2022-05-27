@@ -7,7 +7,7 @@ import responseTime from "response-time"
 import winston from "winston"
 import ajaxRouter from "./ajaxRouter"
 import apiRouter from "./apiRouter"
-import dashboardWebSocket from "./lib/dashboardWebSocket"
+// import dashboardWebSocket from "./lib/dashboardWebSocket"
 import { sendResponse } from "./lib/logger"
 import security from "./lib/security"
 import settings from "./lib/settings"
@@ -40,4 +40,4 @@ const server = app.listen(settings.apiListenPort, () => {
     winston.info(`API running at http://localhost:${serverAddress.port}`)
 })
 
-dashboardWebSocket.listen(server)
+// dashboardWebSocket.listen(server)
