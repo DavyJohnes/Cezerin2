@@ -1,0 +1,23 @@
+FROM node:14-slim as build
+
+RUN apt-get update && apt-get install python make g++ -y
+
+RUN mkdir -p /app/sources
+
+ADD . /app/sources
+
+WORKDIR /app/sources
+
+RUN npm ci
+RUN npm run webpack:store-server
+
+FROM node:14-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/sources/dist/store-server.js /app/
+COPY --from=build /app/sources/theme /app/theme
+
+RUN ls -al /app/
+
+CMD ["node", "store-server.js"]
