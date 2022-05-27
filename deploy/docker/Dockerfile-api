@@ -9,7 +9,7 @@ ADD . /app/sources
 WORKDIR /app/sources
 
 RUN npm ci
-RUN npm run webpack:api
+RUN APP_ENV=production npm run webpack:api
 
 FROM node:14-alpine
 

@@ -1,3 +1,5 @@
+const { urls } = require('./urls');
+
 // config used by server side only
 const dbHost = process.env.DB_HOST || "127.0.0.1"
 const dbPort = process.env.DB_PORT || 27017
@@ -16,13 +18,13 @@ const storeListenPort = process.env.PORT || 3000;
 // Must be changed on server.ts too
 module.exports = {
   // used by Store (server side)
-  apiBaseUrl: `https://cezerin.dev.i-zuev.space/api/v1`,
+  apiBaseUrl: urls.apiBaseUrl,
 
   // used by Store (server and client side)
-  ajaxBaseUrl: `https://cezerin.dev.i-zuev.space/ajax`,
+  ajaxBaseUrl: urls.ajaxBaseUrl,
 
   // Access-Control-Allow-Origin
-  storeBaseUrl: `http://localhost:3000`,
+  storeBaseUrl: urls.storeBaseUrl,
 
   // used by API
   adminLoginUrl: "/admin/login",
