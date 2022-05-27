@@ -11,6 +11,7 @@ import apiRouter from "./apiRouter"
 import { sendResponse } from "./lib/logger"
 import security from "./lib/security"
 import settings from "./lib/settings"
+import {connectWithRetry} from "./lib/mongo";
 
 const app = express()
 
@@ -32,12 +33,16 @@ app.use(urlencoded({ extended: true }))
 app.use(json())
 app.use("/ajax", ajaxRouter)
 app.use("/api", apiRouter)
-app.use(sendResponse)
+app.use(sendResponse);
 
-const server = app.listen(settings.apiListenPort, () => {
-  const serverAddress = server.address()
-  if (typeof serverAddress !== "string")
-    winston.info(`API running at http://localhost:${serverAddress.port}`)
-})
+(async () => {
+    await connectWithRetry();
+
+    const server = app.listen(settings.apiListenPort, () => {
+        const serverAddress = server.address()
+        if (typeof serverAddress !== "string")
+            winston.info(`API running at http://localhost:${serverAddress.port}`)
+    })
+})()
 
 // dashboardWebSocket.listen(server)

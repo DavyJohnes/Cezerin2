@@ -26,23 +26,26 @@ const onReconnect = () => {
   winston.info("MongoDB reconnected")
 }
 
-export let db = null
+export let db = null;
 
-const connectWithRetry = () => {
-  MongoClient.connect(mongodbConnection, connectOptions, (error, client) => {
-    if (error) {
-      winston.error(
-        `MongoDB connection was failed: ${error.message}`,
-        error.message
-      )
-      setTimeout(connectWithRetry, reconnectInterval)
-    } else {
-      db = client.db(dbName)
-      db.on("close", onClose)
-      db.on("reconnect", onReconnect)
-      winston.info("MongoDB connected successfully")
-    }
+export const connectWithRetry = () => new Promise<void>((resolve) => {
+      MongoClient.connect(mongodbConnection, connectOptions, (error, client) => {
+          if (error) {
+              winston.error(
+                  `MongoDB connection was failed: ${error.message}`,
+                  error.message
+              )
+              setTimeout(connectWithRetry, reconnectInterval)
+          } else {
+              db = client.db(dbName)
+
+              db.on("close", onClose)
+              db.on("reconnect", onReconnect)
+              winston.info("MongoDB connected successfully")
+
+              resolve();
+          }
+      })
   })
-}
 
-connectWithRetry()
+// connectWithRetry()
