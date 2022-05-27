@@ -2,5 +2,5 @@
 module.exports = {
   // store UI language
   language: "en",
-  ajaxBaseUrl: "http://localhost:3001/ajax",
+  ajaxBaseUrl: "https://cezerin.dev.i-zuev.space/ajax",
 }
