@@ -3,11 +3,18 @@ import fse from "fs-extra"
 import { ObjectID } from "mongodb"
 import path from "path"
 import url from "url"
+import * as AWS from '@aws-sdk/client-s3';
+import * as fs from 'fs';
 import { db } from "../../lib/mongo"
 import parse from "../../lib/parse"
 import settings from "../../lib/settings"
 import utils from "../../lib/utils"
 import SettingsService from "../settings/settings"
+
+const s3client = new AWS.S3Client({
+  region: 'ru-central1',
+  endpoint: 'https://storage.yandexcloud.net'
+});
 
 class ProductImagesService {
   getErrorMessage(error) {
@@ -56,7 +63,7 @@ class ProductImagesService {
             i => i.id.toString() === imageID.toString()
           )
           if (imageData) {
-            let filename = imageData.filename
+            const {filename} = imageData
             const filepath = path.resolve(
               `${settings.productsUploadPath}/${productID}/${filename}`
             )
@@ -111,6 +118,13 @@ class ProductImagesService {
           }
 
           uploadedFiles.push(imageData)
+
+          // upload to s3
+          s3client.send(new AWS.PutObjectCommand({
+            Bucket: 'cezerin-static',
+            Key: `uploaded-images/${productID}/${file.name}`,
+            Body: fs.readFileSync(file.path),
+          }))
 
           await db.collection("products").updateOne(
             {
