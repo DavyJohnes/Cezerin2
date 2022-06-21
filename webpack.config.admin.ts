@@ -139,6 +139,9 @@ module.exports = {
       raw: false,
       entryOnly: false,
     }),
+    new webpack.EnvironmentPlugin({
+      APP_ENV: "development",
+    }),
   ],
 
   stats: {

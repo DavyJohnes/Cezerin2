@@ -1,3 +1,5 @@
+const { urls } = require('./urls');
+
 // config used by server side only
 const dbHost = process.env.DB_HOST || "127.0.0.1"
 const dbPort = process.env.DB_PORT || 27017
@@ -10,22 +12,25 @@ const dbCred =
 const dbUrl =
   process.env.DB_URL || `mongodb://${dbCred}${dbHost}:${dbPort}/${dbName}`
 
+const apiListenPort = process.env.PORT || 3001;
+const storeListenPort = process.env.PORT || 3000;
+
 // Must be changed on server.ts too
 module.exports = {
   // used by Store (server side)
-  apiBaseUrl: `http://localhost:3001/api/v1`,
+  apiBaseUrl: urls.apiBaseUrl,
 
   // used by Store (server and client side)
-  ajaxBaseUrl: `http://localhost:3001/ajax`,
+  ajaxBaseUrl: urls.ajaxBaseUrl,
 
   // Access-Control-Allow-Origin
-  storeBaseUrl: `http://localhost:3000`,
+  storeBaseUrl: urls.storeBaseUrl,
 
   // used by API
   adminLoginUrl: "/admin/login",
 
-  apiListenPort: 3001,
-  storeListenPort: 3000,
+  apiListenPort,
+  storeListenPort,
 
   // used by API
   mongodbServerUrl: dbUrl,

@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import CezerinClient from "cezerin2-client"
 import express from "express"
 import handlebars from "handlebars"
@@ -21,7 +21,7 @@ const { saltRounds } = serverSettings
 
 const ajaxRouter = express.Router()
 const TOKEN_PAYLOAD = { email: "store", scopes: ["admin"] }
-const STORE_ACCESS_TOKEN = jwt.sign(TOKEN_PAYLOAD, serverSettings.jwtSecretKey)
+const STORE_ACCESS_TOKEN = serverSettings.developerMode ? "" : jwt.sign(TOKEN_PAYLOAD, serverSettings.jwtSecretKey)
 
 const api = new CezerinClient({
   apiBaseUrl: serverSettings.apiBaseUrl,
